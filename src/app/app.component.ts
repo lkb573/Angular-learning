@@ -1,44 +1,34 @@
 import { Component } from '@angular/core';
+import {Hero} from "./hero";
 
-class Hero {
-  id: number;
-  name: string;
-}
 
 const HEROES: Hero[] = [
-  { id: 1, name: ' SPIDER MAN' },
-  { id: 2, name: ' Iron MAN' },
-  { id: 3, name: ' Black Widow' },
-  { id: 4, name: ' THOR' },
-  { id: 5, name: ' Captain America' },
-  { id: 6, name: ' HULK' },
-  { id: 7, name: ' Scarlett Witch' },
-  { id: 8, name: ' Dr.Strange' },
-  { id: 9, name: ' VISION' },
-  { id: 10, name: ' ANTS MAN' }
+  { id: 1, name: 'SPIDER MAN' },
+  { id: 2, name: 'Iron MAN' },
+  { id: 3, name: 'Black Widow' },
+  { id: 4, name: 'THOR' },
+  { id: 5, name: 'Captain America' },
+  { id: 6, name: 'HULK' },
+  { id: 7, name: 'Scarlett Witch' },
+  { id: 8, name: 'Dr.Strange' },
+  { id: 9, name: 'VISION' },
+  { id: 10, name: 'ANTS MAN' }
 ];
 
 
 @Component({
-  selector: 'hero',
+  selector: 'hero-list',
   template: `
     <h2>My Heroes</h2>
     
     <ul class="heroes">
-      <li *ngFor="let hero of heroes" (click)="onSelect(hero)">
+      <li *ngFor="let hero of heroes" (click)="onSelect(hero)"
+            [class.selected]="hero === selectedHero">        <!--property binding-->
         <span class="badge">{{hero.id}}</span>{{hero.name}}
       </li>
     </ul>
         
-    <div *ngIf="selectedHero">
-      <h2>{{selectedHero.name}} !!!</h2>
-      <div><label>id: </label>{{selectedHero.id}}</div>
-      <div><label>name: </label>{{selectedHero.name}}</div>
-      <div>
-        <label>name: {{selectedHero.name}}</label>
-        <input [(ngModel)]="selectedHero.name" placeholder="name">
-      </div>
-    </div>
+    <hero-detail></hero-detail>
   `,
 
   styles: [`

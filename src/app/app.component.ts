@@ -1,23 +1,14 @@
-import { Component } from '@angular/core';
-import {Hero} from "./hero";
+import {Component, OnInit} from '@angular/core';
+import { Hero } from "./hero";
+import { HeroService } from "./hero.service";
 
-
-const HEROES: Hero[] = [
-  { id: 1, name: 'SPIDER MAN' },
-  { id: 2, name: 'Iron MAN' },
-  { id: 3, name: 'Black Widow' },
-  { id: 4, name: 'THOR' },
-  { id: 5, name: 'Captain America' },
-  { id: 6, name: 'HULK' },
-  { id: 7, name: 'Scarlett Witch' },
-  { id: 8, name: 'Dr.Strange' },
-  { id: 9, name: 'VISION' },
-  { id: 10, name: 'ANTS MAN' }
-];
 
 
 @Component({
   selector: 'hero-list',
+  providers: [
+    HeroService
+  ],
   template: `
     <h2>My Heroes</h2>
     
@@ -28,7 +19,7 @@ const HEROES: Hero[] = [
       </li>
     </ul>
         
-    <hero-detail></hero-detail>
+    <hero-detail [hero]="selectedHero"></hero-detail>
   `,
 
   styles: [`
@@ -84,7 +75,7 @@ const HEROES: Hero[] = [
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Hero is Comming';
 
   /*hero: Hero = {
@@ -92,9 +83,17 @@ export class AppComponent {
     name: 'Spider MAN'
   };*/
 
-  heroes = HEROES;
+  heroes;
 
   selectedHero: Hero;
+
+  constructor(private heroService: HeroService) {
+
+  }
+
+  ngOnInit() {
+    this.heroes = this.heroService.getHeroes();
+  }
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
